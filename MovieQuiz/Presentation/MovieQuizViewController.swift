@@ -1,44 +1,12 @@
 import UIKit
 
 final class MovieQuizViewController: UIViewController {
-    // MARK: - Lifecycle
-    
-    @IBAction private func yesButtonClicked(_ sender: UIButton) {
-        let currentQuestion = questions[currentQuestionIndex].correctAnswer
-        let givenAnswer = true
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion)
-    }
-    
-    @IBAction private func noButtonClicked(_ sender: UIButton) {
-        let currentQuestion = questions[currentQuestionIndex].correctAnswer
-        let givenAnswer = false
-        
-        showAnswerResult(isCorrect: givenAnswer == currentQuestion)
-    }
-    
+    // MARK: - IB Outlets
     @IBOutlet private weak var imageView: UIImageView!
     @IBOutlet private weak var textLabel: UILabel!
     @IBOutlet private weak var counterLabel: UILabel!
     
-   private struct QuizQuestion {
-        let image: String
-        let text: String
-        let correctAnswer: Bool
-    }
-    
-    private struct QuizStepViewModel {
-        let image: UIImage
-        let question: String
-        let questionNumber: String
-    }
-    
-    private struct QuizResultsViewModel {
-        let title: String
-        let text: String
-        let buttonText: String
-    }
-    
+    // MARK: - Private Properties
     private var currentQuestionIndex = 0
     private var correctAnswers = 0
     
@@ -54,12 +22,41 @@ final class MovieQuizViewController: UIViewController {
         QuizQuestion(image: "Tesla", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
         QuizQuestion(image: "Vivarium", text: "Рейтинг этого фильма больше чем 6?", correctAnswer: false),
     ]
-        
+      
+    private struct QuizQuestion {
+         let image: String
+         let text: String
+         let correctAnswer: Bool
+     }
+     
+     private struct QuizStepViewModel {
+         let image: UIImage
+         let question: String
+         let questionNumber: String
+     }
+     
+     private struct QuizResultsViewModel {
+         let title: String
+         let text: String
+         let buttonText: String
+     }
+    // MARK: - Lifecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         show(quiz: convert(model: questions[currentQuestionIndex]))
     }
-
+    
+    // MARK: - IB Actions
+    @IBAction private func yesButtonClicked(_ sender: UIButton) {
+        showAnswerResult(isCorrect: questions[currentQuestionIndex].correctAnswer)
+    }
+    
+    @IBAction private func noButtonClicked(_ sender: UIButton) {
+        showAnswerResult(isCorrect: !questions[currentQuestionIndex].correctAnswer)
+    }
+    
+    
+    // MARK: - Private Methods
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let image: UIImage
         if let findimage = UIImage(named: model.image) {
