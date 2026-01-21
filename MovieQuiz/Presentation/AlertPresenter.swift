@@ -1,7 +1,6 @@
-import Foundation
 import UIKit
 
-class AlertPresenter {
+final class AlertPresenter {
     func show(controller: UIViewController, model: AlertModel) {
         let alert = UIAlertController(title: model.title, message: model.message, preferredStyle: .alert)
         let action = UIAlertAction(title: model.buttonText, style: .default) {_ in

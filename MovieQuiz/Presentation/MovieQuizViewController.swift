@@ -17,16 +17,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     // MARK: - Lifecycle
     override func viewDidLoad() {
-        super.viewDidLoad()
-        
-        imageView.layer.cornerRadius = 20
-        
-        let questionFactory = QuestionFactory()
-        questionFactory.setDelegate(delegate: self)
-        self.questionFactory = questionFactory
-        
-        questionFactory.requestNextQuestion()
-        statisticService = StatisticService()
+        setupUI()
+        setupDependencies()
+        startGame()
     }
     
     // MARK: - QuestionFactoryDelegate
@@ -64,6 +57,22 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     
     
     // MARK: - Private Methods
+    private func setupUI() {
+        imageView.layer.cornerRadius = 20
+    }
+    
+    private func setupDependencies() {
+        let questionFactory = QuestionFactory()
+        questionFactory.setDelegate(delegate: self)
+        self.questionFactory = questionFactory
+        
+        statisticService = StatisticService()
+    }
+    
+    private func startGame() {
+        questionFactory.requestNextQuestion()
+    }
+    
     private func convert(model: QuizQuestion) -> QuizStepViewModel {
         let image: UIImage
         if let findimage = UIImage(named: model.image) {
@@ -111,7 +120,7 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             let message = """
             Ваш результат: \(correctAnswers)/\(questionsAmount)
             Количество сыгранных квизов: \(totalGames)
-            Рекорд: \(bestGame.correct)/\(bestGame.total) (\(bestGameDate)
+            Рекорд: \(bestGame.correct)/\(bestGame.total) (\(bestGameDate))
             Средняя точность: \(totalAccuracy)
             """
             
