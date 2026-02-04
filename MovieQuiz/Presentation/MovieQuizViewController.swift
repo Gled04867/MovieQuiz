@@ -68,6 +68,9 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     // MARK: - Private Methods
     private func setupUI() {
         imageView.layer.cornerRadius = 20
+        imageView.backgroundColor = .ypGray
+        showLoadingIndicator()
+        
     }
     
     private func setupDependencies() {
@@ -76,7 +79,6 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
     }
     
     private func startGame() {
-        showLoadingIndicator()
         questionFactory?.loadData()
     }
     
@@ -165,7 +167,8 @@ final class MovieQuizViewController: UIViewController, QuestionFactoryDelegate {
             self.currentQuestionIndex = 0
             self.correctAnswers = 0
             
-            self.questionFactory?.requestNextQuestion()
+            showLoadingIndicator()
+            self.questionFactory?.loadData()
         }
         
         alertPresenter.show(controller: self, model: model)
