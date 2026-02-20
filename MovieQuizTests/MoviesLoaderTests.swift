@@ -7,7 +7,7 @@ class MoviesLoaderTests: XCTestCase {
         let stubNetworkClient = StubNetworkClient(emulateError: false)
         let loader = MoviesLoader(networkClient: stubNetworkClient)
         
-        let expectation = XCTestExpectation(description: "Loading expectation")
+        let expectation = expectation(description: "Loading expectation")
         
         loader.loadMovies { result in
             switch result {
@@ -25,7 +25,7 @@ class MoviesLoaderTests: XCTestCase {
         let stubNetworkClient = StubNetworkClient(emulateError: true)
         let loader = MoviesLoader(networkClient: stubNetworkClient)
         
-        let expectation = XCTestExpectation(description: "Loading expectation")
+        let expectation = expectation(description: "Loading expectation")
         
         loader.loadMovies { result in
             switch result {
